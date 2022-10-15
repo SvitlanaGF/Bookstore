@@ -1,0 +1,4 @@
+D:\Lessons\L2\Bookstore\Bookstore\obj\Debug\netcoreapp3.1\Bookstore.csprojAssemblyReference.cache
+D:\Lessons\L2\Bookstore\Bookstore\obj\Debug\netcoreapp3.1\Bookstore.AssemblyInfoInputs.cache
+D:\Lessons\L2\Bookstore\Bookstore\obj\Debug\netcoreapp3.1\Bookstore.AssemblyInfo.cs
+D:\Lessons\L2\Bookstore\Bookstore\obj\Debug\netcoreapp3.1\Bookstore.csproj.CoreCompileInputs.cache
