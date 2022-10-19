@@ -7,7 +7,7 @@ namespace Bookstore
 {
     internal class Filler
     {
-        Methods_for_menu m = new Methods_for_menu();
+        Methods_for_menu n = new Methods_for_menu.Methods_for_menu();
         public List<Book.Book> Books()
         {
             var first_book = new Book.Book("Quixote", "Miguel de Cervantes Saavedra", 300.5);
@@ -54,7 +54,7 @@ namespace Bookstore
                     for (int i = 0; i < number_of_readers; i++)
                     {
 
-                        string name = m.rand_str();
+                        string name = n.rand_str();
                         double cash = random.Next(300, 50000);
                         readers.Add(new Reader.Reader(shp, name, cash));
 

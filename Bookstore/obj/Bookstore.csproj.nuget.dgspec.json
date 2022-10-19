@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Lessons\\L2\\Bookstore\\Bookstore\\Bookstore.csproj": {}
+    "D:\\Lessons\\Bookstore\\Bookstore\\Bookstore.csproj": {}
   },
   "projects": {
-    "D:\\Lessons\\L2\\Bookstore\\Bookstore\\Bookstore.csproj": {
+    "D:\\Lessons\\Bookstore\\Bookstore\\Bookstore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Lessons\\L2\\Bookstore\\Bookstore\\Bookstore.csproj",
+        "projectUniqueName": "D:\\Lessons\\Bookstore\\Bookstore\\Bookstore.csproj",
         "projectName": "Bookstore",
-        "projectPath": "D:\\Lessons\\L2\\Bookstore\\Bookstore\\Bookstore.csproj",
+        "projectPath": "D:\\Lessons\\Bookstore\\Bookstore\\Bookstore.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Lessons\\L2\\Bookstore\\Bookstore\\obj\\",
+        "outputPath": "D:\\Lessons\\Bookstore\\Bookstore\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
