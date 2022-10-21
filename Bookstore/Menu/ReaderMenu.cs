@@ -84,7 +84,10 @@ namespace Bookstore.Reader
                     case 9:
                         find_book_in(rdr.FavBooks);
                         break;
-                    case -1: flag = false; Console.WriteLine("GoodBye!"); break;
+                    case -1: 
+                        flag = false; 
+                        Console.WriteLine("GoodBye!"); 
+                        break;
                     default:
                         break;
                 }

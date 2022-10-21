@@ -7,7 +7,6 @@ namespace Bookstore
 {
     internal class Filler
     {
-        Methods_for_menu n = new Methods_for_menu.Methods_for_menu();
         public List<Book.Book> Books()
         {
             var first_book = new Book.Book("Quixote", "Miguel de Cervantes Saavedra", 300.5);
@@ -23,46 +22,6 @@ namespace Bookstore
             var BookWorld = new Shop.Shop("Book World");
             var Bbook = new Shop.Shop("Be book");
             return new List<Shop.Shop>() { BookWorld, Bbook };
-        }
-
-        public void add_all_books_to_shop(Shop.Shop shop, List<Book.Book> books)
-        {
-
-            foreach (Book.Book book in books)
-            {
-                shop.AddBook(book);
-            }
-        }
-
-        public List<Reader.Reader> readers_for_shop(Shop.Shop shp, int number_of_readers)
-        {
-            Console.WriteLine("Do you want to create the list of readers yourself (write '1' below), or by random(write '2' below)?");
-            int choise = int.Parse(Console.ReadLine());
-            List<Reader.Reader> readers = new List<Reader.Reader>();
-            switch (choise)
-            {
-                case 1:
-                    for (int i = 0; i < number_of_readers; i++)
-                    {
-                        string name = Console.ReadLine();
-                        double cash = double.Parse(Console.ReadLine());
-                        readers.Add(new Reader.Reader(shp, name, cash));
-                    }
-                    break;
-                case 2:
-                    Random random = new Random();
-                    for (int i = 0; i < number_of_readers; i++)
-                    {
-
-                        string name = n.rand_str();
-                        double cash = random.Next(300, 50000);
-                        readers.Add(new Reader.Reader(shp, name, cash));
-
-                    }
-                    break;
-
-            }
-            return readers;
         }
     }
 }

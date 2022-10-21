@@ -13,14 +13,14 @@ namespace Bookstore.Shop
             this.shop = shop;
         }
 
-        public void menu(List<Reader.Reader> all_readers)
+        public void menu(List<Reader.Reader> all_readers, List<Book.Book> all_books) // menu for a bookstore admin 
         {
             Console.WriteLine($"You are in shop: {shop.Name}!");
             Console.WriteLine("Menu:");
             var flag = true;
             while (flag)
             {
-                Console.Write("1 - show all books for a shop\n2 - show all readers for a shop\n3 - find a book in a shop\n4 - add book to bookstore\n5 - delete book from bookstore\n7 - delete book from list of books\n8 - find book in list\n-1 - Exit");
+                Console.Write("1 - show all books for a shop\n2 - show all readers for a shop\n3 - find a book in a shop\n4 - create and add book to bookstore\n5 - add books from the ready list\n6 - delete book from bookstore\n7 - add list of readers\n-1 - Exit");
                 Console.WriteLine("Your Choise : ");
                 var choise = int.Parse(Console.ReadLine());
                 switch (choise)
@@ -38,9 +38,22 @@ namespace Bookstore.Shop
                         create_and_add_book(this.shop);
                         break;
                     case 5:
+                        add_all_books_to_shop(shop, all_books);
+                        break;
+                    case 6:
                         delete_book(shop.GetBooks);
                         break;
-
+                    case 7:
+                        Console.WriteLine("How mane elements?");
+                        int num = Convert.ToInt32(Console.ReadLine());
+                        readers_for_shop(shop, num).ForEach(item => all_readers.Add(item));
+                        break;
+                    case -1: 
+                        flag = false; 
+                        Console.WriteLine("GoodBye!"); 
+                        break;
+                    default:
+                        break;
 
                 }
             }
