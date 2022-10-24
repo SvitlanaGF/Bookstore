@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Text.RegularExpressions;
 //to do:
 //продумати як використати із паролем все(запис у файл, а коли просто хочемо зайти на ак, то зчитати)
 // 
@@ -25,7 +26,7 @@ namespace Bookstore.Register
             string choise = Console.ReadLine();
             var shop = all_shops.Where(x => x.Name == choise).FirstOrDefault();
             var reader = readers.Values.Where(x => x.Name == name).FirstOrDefault();
-            if(shop != null && name == null)
+            if(shop != null && name == null && Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$")==true)
             {
           
                 readers.Add(password, new Reader.Reader(shop, name, cash));
