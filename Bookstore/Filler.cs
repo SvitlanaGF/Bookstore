@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Bookstore.Reader;
+using Bookstore.Register;
+using Bookstore.Shop;
+using System;
 using System.Collections.Generic;
 using System.Text;
 // in a process
@@ -22,6 +25,26 @@ namespace Bookstore
             var BookWorld = new Shop.Shop("Book World");
             var Bbook = new Shop.Shop("Be book");
             return new List<Shop.Shop>() { BookWorld, Bbook };
+        }
+
+        public void Menu(Dictionary<string, Shop.Shop> all_shops, Dictionary<string, Reader.Reader> readers, List<Book.Book> all_books)
+        {
+            Console.WriteLine("Are you an admin(A) or a reader(R)?");
+            string usr = Console.ReadLine();
+            if(usr.ToLower() =="r" || usr.ToLower() == "reader")
+            {
+                Reg_Reader r = new Reg_Reader();
+                Reader.Reader reader = r.RegMenu(new List<Shop.Shop>(all_shops.Values), readers);
+                ReaderMenu readerMenu = new ReaderMenu(reader);
+                readerMenu.menu(new List<Shop.Shop>(all_shops.Values));
+            }
+            else if(usr.ToLower() == "a" || usr.ToLower() == "admin")
+            {
+                Reg_Admin a = new Reg_Admin();
+                Shop.Shop shop = a.RegMenu(all_shops);
+                AdminMenu adminMenu = new AdminMenu(shop);
+                adminMenu.menu(new List<Reader.Reader>(readers.Values), all_books);
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
+using System.Drawing;
 // in a process
 
 
@@ -37,37 +38,69 @@ namespace Bookstore
         }
         public void show_all_books(List<Book.Book> books) // show information about all books in the list 
         {
-            foreach (Book.Book b in books)
+            for(int i = 0; i < books.Count; i++)
             {
-                Console.WriteLine($"Author: {b.Author} -- Book: {b.Title} -- Price: {b.Price}");
+                Console.WriteLine($"[{i+1}] - Author: {books[i].Author} -- Book: {books[i].Title} -- Price: {books[i].Price}");
             }
 
         }
 
-        public void add_book(List<Book.Book> books, List<Book.Book> donor) // add book to the list from another book list
+        public void show_all_books_for_a_bookstore(List<Shop.Shop> all_shops, Reader.Reader rdr)
         {
-            Console.WriteLine("Title:");
-            string ttl = Console.ReadLine();
-            Console.WriteLine("Author:");
-            string ath = Console.ReadLine();
-            var bookInList = books.Where(x => x.Title == ttl && x.Author == ath);
-            if(bookInList == null)
+            show_all_shops(all_shops);
+            Console.WriteLine("Input bookstore number:");
+            int srch = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(">>>>>>>>>>Books<<<<<<<<<<");
+            if (srch > 0 && srch <= all_shops.Count + 1)
             {
-                var book = donor.Where(x => x.Title == ttl && x.Author == ath).FirstOrDefault();
-                if (book != null)
+                var shop = all_shops[srch - 1];
+                show_all_books(shop.GetBooks);
+                Console.WriteLine("Do you want buy a book from this list?(Y/N)");
+                string answ = Console.ReadLine();
+                if (answ.ToLower() == "y" || answ.ToLower() == "yes")
                 {
-                    books.Add(book);
-                    Console.WriteLine($"'{book.Title}' has added.");
+                    Console.WriteLine("Write number of a book :");
+                    int bk = Convert.ToInt32(Console.ReadLine());
+                    if (bk > 0 && bk <= shop.GetBooks.Count)
+                    {
+                        var book = shop.GetBooks[bk - 1];
+                        buy_book(book, rdr);
+                    }
+
+                }
+                else if (answ.ToLower() == "n" || answ.ToLower() == "no")
+                {
+                    Console.WriteLine("Ok:(");
                 }
                 else
                 {
-                    Console.WriteLine("The book doesn't exist");
+                    Console.WriteLine("We can't find it:(");
                 }
+            }
+        }
 
+        public void add_book(List<Book.Book> books, List<Book.Book> donor) // add book to the list from another book list
+        {
+            Console.WriteLine("All books:");
+            show_all_books(donor);
+            Console.WriteLine("Input number of the book you want add:");
+            int num = Convert.ToInt32(Console.ReadLine());
+            if (num > 0 && num <= (donor.Count+1))
+            {
+                var bookInList= books.Where(x=> x.Author == donor[num-1].Author && x.Title == donor[num-1].Title).FirstOrDefault();
+                if (bookInList == null)
+                {
+                    books.Add(donor[num - 1]);
+                    Console.WriteLine($"'{donor[num - 1].Title}' has added.");
+                }
+                else
+                {
+                    Console.WriteLine($"You can't add a book '{donor[num - 1].Title}', because it already exists.");
+                }
             }
             else
             {
-                Console.WriteLine($"You can't add a book '{ttl}', because it already exists.");
+                Console.WriteLine($"You can't add this book.");
             }
         }
         public void create_and_add_book(Shop.Shop shop) // method for creating and adding a book to a shop you chose
@@ -138,14 +171,13 @@ namespace Bookstore
 
         public void delete_book(List<Book.Book> books) //delete book from list books
         {
-            Console.WriteLine("Title:");
-            string ttl = Console.ReadLine();
-            Console.WriteLine("Author:");
-            string ath = Console.ReadLine();
-            var book = books.Where(x => x.Title == ttl && x.Author == ath).FirstOrDefault();
-            if (book != null)
+            Console.WriteLine("All books:");
+            show_all_books(books);
+            Console.WriteLine("Input number of the book you want buy:");
+            int num = Convert.ToInt32(Console.ReadLine());
+            if (num > 0 && num <= (books.Count + 1))
             {
-                books.Remove(book);
+                books.Remove(books[num - 1]);
             }
             else
             {
@@ -167,9 +199,9 @@ namespace Bookstore
         public void show_all_shops(List<Shop.Shop> shops) // show names of bookstores from list
         {
             Console.WriteLine(">>>>>>>>>>Shops<<<<<<<<<<");
-            foreach (Shop.Shop sh in shops)
+            for(int i =0;i<shops.Count;i++)
             {
-                Console.WriteLine(sh.Name);
+                Console.WriteLine($"[{i+1}] {shops[i].Name}");
             }
 
         }
@@ -181,6 +213,7 @@ namespace Bookstore
             string ttl = Console.ReadLine();
             Console.WriteLine("Author:");
             string ath = Console.ReadLine();
+            List<Shop.Shop> list_of_shops = new List<Shop.Shop>();
 
             foreach (Shop.Shop shp in shops)
             {
@@ -188,24 +221,27 @@ namespace Bookstore
                 if (bk != null)
                 {
                     dict_of_books.Add(shp.Name, bk);
+                    list_of_shops.Add(shp);
                 }
             }
             if (dict_of_books.Count() != 0) // if we find bookstores with a book we search, we'll show information about price of our book in these bookstores
             {
+                int i = 1;
                 foreach (KeyValuePair<string, Book.Book> kvp in dict_of_books)
                 {
-                    Console.WriteLine($"Store: {kvp.Key} ---- Book: {kvp.Value.Title} -- Price: {kvp.Value.Price}");
+                    Console.WriteLine($"[{i}] Store: {kvp.Key} ---- Book: {kvp.Value.Title} -- Price: {kvp.Value.Price}");
+                    i += 1;
                 }
                 Console.WriteLine("Do you want buy this book?(Y/N)"); // our reader rdr can buy this book
                 string answ = Console.ReadLine();
-                if (answ.ToLower() == "y")
+                if (answ.ToLower() == "y" || answ.ToLower() == "yes")
                 {
-                    Console.WriteLine("Please, write name of shop");
-                    string shop = Console.ReadLine();
-                    var book = dict_of_books.Where(x => x.Key == shop).FirstOrDefault().Value;
+                    Console.WriteLine("Please, write number shop");
+                    int shop = Convert.ToInt32(Console.ReadLine());
+                    var book = dict_of_books.Where(x => x.Key == list_of_shops[shop].Name).FirstOrDefault().Value;
                     buy_book(book, rdr);
                 }
-                else if (answ.ToLower() == "n")
+                else if (answ.ToLower() == "n" || answ.ToLower() == "no")
                 {
                     Console.WriteLine("Ok:(");
                 }

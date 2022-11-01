@@ -46,5 +46,21 @@ namespace Bookstore.Register
             Console.WriteLine("We can't find the user");
             return null;
         }
+
+        public Reader.Reader RegMenu(List<Shop.Shop> all_shops, Dictionary<string, Reader.Reader> readers)
+        {
+            Console.WriteLine("Register(R) or Log In(L)?");
+            string choise = Console.ReadLine();
+            if(choise.ToLower() == "r" || choise.ToLower() == "register")
+            {
+                this.Register(all_shops, readers);
+                return this.LogIn(readers);
+            }else if(choise.ToLower() == "l" || choise.ToLower() == "login")
+            {
+                return this.LogIn(readers);
+            }
+            return null;
+        }
+
     }
 }

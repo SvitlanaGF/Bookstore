@@ -31,38 +31,8 @@ namespace Bookstore.Reader
                         show_all_shops(all_shops);
                         break;
                     case 2:
-                        Console.WriteLine("Shop:");
-                        string srch = Console.ReadLine();
-                        Console.WriteLine(">>>>>>>>>>Books<<<<<<<<<<");
-                        var shop = all_shops.Where(x => x.Name == srch).FirstOrDefault();
-                        if (shop != null)
-                        {
-                            show_all_books(shop.GetBooks);
-                        }
-                            Console.WriteLine("Do you want buy a book from this list?(Y/N)");
-                            string answ = Console.ReadLine();
-                            if (answ.ToLower() == "y")
-                            {
-                                Console.WriteLine("Title:");
-                                string ttl = Console.ReadLine();
-                                Console.WriteLine("Author:");
-                                string ath = Console.ReadLine();
-                                var book = shop.GetBooks.Where(x => x.Title == ttl && x.Author == ath).FirstOrDefault();
-                                if (book != null)
-                                {
-                                    buy_book(book, rdr);
-                                }
-
-                            }
-                            else if (answ.ToLower() == "n")
-                            {
-                                Console.WriteLine("Ok:(");
-                            }
-                        else
-                        {
-                            Console.WriteLine("We can't find it:(");
-                        }
-                break;
+                        show_all_books_for_a_bookstore(all_shops, rdr);
+                        break;
                     case 3:
                         find_a_book_in_bookstores(all_shops, rdr);
                         break;
