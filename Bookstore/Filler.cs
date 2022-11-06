@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Bookstore.Reader;
+using Bookstore.Register;
+using Bookstore.Shop;
+using System;
 using System.Collections.Generic;
 using System.Text;
 // in a process
@@ -7,7 +10,6 @@ namespace Bookstore
 {
     internal class Filler
     {
-        Methods_for_menu m = new Methods_for_menu();
         public List<Book.Book> Books()
         {
             var first_book = new Book.Book("Quixote", "Miguel de Cervantes Saavedra", 300.5);
@@ -25,44 +27,24 @@ namespace Bookstore
             return new List<Shop.Shop>() { BookWorld, Bbook };
         }
 
-        public void add_all_books_to_shop(Shop.Shop shop, List<Book.Book> books)
+        public void Menu(Dictionary<string, Shop.Shop> all_shops, Dictionary<string, Reader.Reader> readers, List<Book.Book> all_books)
         {
-
-            foreach (Book.Book book in books)
+            Console.WriteLine("Are you an admin(A) or a reader(R)?");
+            string usr = Console.ReadLine();
+            if(usr.ToLower() =="r" || usr.ToLower() == "reader")
             {
-                shop.AddBook(book);
+                Reg_Reader r = new Reg_Reader();
+                Reader.Reader reader = r.RegMenu(new List<Shop.Shop>(all_shops.Values), readers);
+                ReaderMenu readerMenu = new ReaderMenu(reader);
+                readerMenu.menu(new List<Shop.Shop>(all_shops.Values));
             }
-        }
-
-        public List<Reader.Reader> readers_for_shop(Shop.Shop shp, int number_of_readers)
-        {
-            Console.WriteLine("Do you want to create the list of readers yourself (write '1' below), or by random(write '2' below)?");
-            int choise = int.Parse(Console.ReadLine());
-            List<Reader.Reader> readers = new List<Reader.Reader>();
-            switch (choise)
+            else if(usr.ToLower() == "a" || usr.ToLower() == "admin")
             {
-                case 1:
-                    for (int i = 0; i < number_of_readers; i++)
-                    {
-                        string name = Console.ReadLine();
-                        double cash = double.Parse(Console.ReadLine());
-                        readers.Add(new Reader.Reader(shp, name, cash));
-                    }
-                    break;
-                case 2:
-                    Random random = new Random();
-                    for (int i = 0; i < number_of_readers; i++)
-                    {
-
-                        string name = m.rand_str();
-                        double cash = random.Next(300, 50000);
-                        readers.Add(new Reader.Reader(shp, name, cash));
-
-                    }
-                    break;
-
+                Reg_Admin a = new Reg_Admin();
+                Shop.Shop shop = a.RegMenu(all_shops);
+                AdminMenu adminMenu = new AdminMenu(shop);
+                adminMenu.menu(new List<Reader.Reader>(readers.Values), all_books);
             }
-            return readers;
         }
     }
 }

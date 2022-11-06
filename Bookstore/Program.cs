@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Bookstore.Reader;
+using Bookstore.Register;
+using Bookstore.Shop;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-//in a procces
 
 namespace Bookstore
 {
@@ -10,19 +12,28 @@ namespace Bookstore
     {
         static void Main(string[] args)
         {
-            string folder = @"D:\Lessons\L2\Bookstore\Bookstore\Books";
-            string fileName = "Books.json";
-            string fullPath = folder + fileName;
-            List<Book.Book> all_books = new List<Book.Book>();
+            Shop.Shop a = new Shop.Shop("Belle");
             Filler f = new Filler();
-            all_books = f.Books();
-            string json = JsonConvert.SerializeObject(all_books);
-            Console.WriteLine(json);
-            using (StreamWriter writer = new StreamWriter(fullPath))
-            {
-                writer.Write(json);
-
+            Shop.Shop b = new Shop.Shop("Bookland");
+            List<Book.Book> books = f.Books();
+            for (int i = 0; i < f.Books().Count; i++) {
+                a.AddBook(f.Books()[i]);
+                b.AddBook(f.Books()[i]);
             }
+            List<Shop.Shop> shps = f.Shops();
+            
+            Dictionary<string, Shop.Shop> all_bookstores = new Dictionary<string, Shop.Shop>() { { "FlipperAndLopaka21", a},{"Ogust1Renuar9", b} };
+            for (int i = 0; i < shps.Count; i++)
+            {
+                all_bookstores.Add($"LittlePrince{i}", shps[i]);
+            }
+            Dictionary<string, Reader.Reader> all_readers = new Dictionary<string, Reader.Reader>();
+
+           
+
+            //menu
+            f.Menu(all_bookstores, all_readers, books);
+
         }
     }
 }
