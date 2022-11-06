@@ -48,13 +48,13 @@ namespace Bookstore.Register
             string choise = Console.ReadLine();
             if(choise.ToLower() == "r" || choise.ToLower() == "register")
             {
-                this.Register(all_shops);
-                return this.LogIn(all_shops);
+                Register(all_shops);
+                return LogIn(all_shops);
 
             }
             else if(choise.ToLower() == "l" || choise.ToLower() == "login")
             {
-                return this.LogIn(all_shops);
+                return LogIn(all_shops);
             }
             return null;
         }

@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-//in a procces
 
 namespace Bookstore
 {
@@ -13,11 +12,24 @@ namespace Bookstore
     {
         static void Main(string[] args)
         {
-            Dictionary<string, Shop.Shop> all_bookstores = new Dictionary<string, Shop.Shop>();
+            Shop.Shop a = new Shop.Shop("Belle");
+            Filler f = new Filler();
+            Shop.Shop b = new Shop.Shop("Bookland");
+            List<Book.Book> books = f.Books();
+            for (int i = 0; i < f.Books().Count; i++) {
+                a.AddBook(f.Books()[i]);
+                b.AddBook(f.Books()[i]);
+            }
+            List<Shop.Shop> shps = f.Shops();
+            
+            Dictionary<string, Shop.Shop> all_bookstores = new Dictionary<string, Shop.Shop>() { { "FlipperAndLopaka21", a},{"Ogust1Renuar9", b} };
+            for (int i = 0; i < shps.Count; i++)
+            {
+                all_bookstores.Add($"LittlePrince{i}", shps[i]);
+            }
             Dictionary<string, Reader.Reader> all_readers = new Dictionary<string, Reader.Reader>();
 
-            Filler f = new Filler();
-            List<Book.Book> books = f.Books();
+           
 
             //menu
             f.Menu(all_bookstores, all_readers, books);

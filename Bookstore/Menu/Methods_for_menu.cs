@@ -5,6 +5,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using System.Drawing;
+using System.Text.RegularExpressions;
 // in a process
 
 
@@ -29,7 +30,7 @@ namespace Bookstore
             var book = books.Where(x => x.Title == ttl && x.Author == ath).FirstOrDefault();
             if (book != null)
             {
-                Console.WriteLine("There is the book is your list");
+                Console.WriteLine("There is the book in your list");
             }
             else
             {
@@ -124,8 +125,17 @@ namespace Bookstore
                 Console.WriteLine("Author:");
                 string ath = Console.ReadLine();
                 Console.WriteLine("Price:");
-                double prc = Convert.ToDouble(Console.ReadLine());
-                shop.AddBook(new Book.Book(ttl, ath, prc));
+                string prc = Console.ReadLine();
+                if(double.TryParse(prc, out double price) && price>0 && Regex.IsMatch(ath, @"([A-Z][a-z]{1,}( )[A-Z][a-z]{1,})"))
+                {
+                    shop.AddBook(new Book.Book(ttl, ath, price));
+                }
+                else
+                {
+                    Console.WriteLine("You can't add this book");
+
+                }
+                
             }
         }
 
@@ -150,6 +160,7 @@ namespace Bookstore
                     {
                         string name = Console.ReadLine();
                         double cash = double.Parse(Console.ReadLine());
+
                         readers.Add(new Reader.Reader(shp, name, cash));
                     }
                     break;
@@ -238,8 +249,11 @@ namespace Bookstore
                 {
                     Console.WriteLine("Please, write number shop");
                     int shop = Convert.ToInt32(Console.ReadLine());
-                    var book = dict_of_books.Where(x => x.Key == list_of_shops[shop].Name).FirstOrDefault().Value;
-                    buy_book(book, rdr);
+                    if (shop > 0 && shop <= list_of_shops.Count + 1)
+                    {
+                        var book = dict_of_books.Where(x => x.Key == list_of_shops[shop - 1].Name).FirstOrDefault().Value;
+                        buy_book(book, rdr);
+                    }
                 }
                 else if (answ.ToLower() == "n" || answ.ToLower() == "no")
                 {
@@ -266,7 +280,7 @@ namespace Bookstore
         {
             if (fileName.EndsWith(".json"))
             {
-                string folder = @"D:\Lessons\L2\Bookstore\Bookstore\Books";
+                string folder = @"../../";
                 string fullPath = folder + fileName;
                 Filler f = new Filler();
                 all_books = f.Books();
@@ -279,5 +293,14 @@ namespace Bookstore
                 }
             }
         }
+
+        //public List<Book.Book> books_from_json(string fileName, List<Book.Book> all_books)
+        //{
+        //    if (fileName.EndsWith(".json"))
+        //    {
+
+        //    }
+        //}
+
     }
 }
