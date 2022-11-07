@@ -294,13 +294,31 @@ namespace Bookstore
             }
         }
 
-        //public List<Book.Book> books_from_json(string fileName, List<Book.Book> all_books)
-        //{
-        //    if (fileName.EndsWith(".json"))
-        //    {
+        public List<Book.Book> books_from_json(string path, List<Book.Book> all_books)
+        {
+            if (path.EndsWith(".json"))
+            {
 
-        //    }
-        //}
+                using (StreamReader sr = File.OpenText(path))
+                {
+                    var myObject = JsonConvert.DeserializeObject<List<Book.Book>>(sr.ReadToEnd());
+                    all_books.AddRange(myObject);
+                }
+                return all_books;
 
+            }
+            return all_books;
+        }
+    }
+
+    class Card
+    {
+        public string number { get; set; }
+        public double cash { get; set; }
+        public Card(string number, double cash)
+        {
+            this.number = number;
+            this.cash = cash;
+        }
     }
 }
