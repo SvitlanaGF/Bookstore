@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using System.Text.RegularExpressions;
-//to do:
-//продумати як використати із паролем все(запис у файл, а коли просто хочемо зайти на ак, то зчитати)
-// 
 
 namespace Bookstore.Register
 {
@@ -25,7 +20,7 @@ namespace Bookstore.Register
             Console.WriteLine("Your choise (number of a bookstore):");
             int choise = Convert.ToInt32(Console.ReadLine());
             var reader = readers.Values.Where(x => x.Name == name).FirstOrDefault();
-            if(choise >= 1 && choise <= all_shops.Count+1 && reader == null && Regex.IsMatch(name, @"^[a-zA-Z][a-zA-Z0-9_.]{5,35}$ ") && Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$") && double.TryParse(cash, out double csh) && csh >=0)
+            if(choise >= 1 && choise <= all_shops.Count+1 && reader == null && double.TryParse(cash, out double csh) && csh >=0)
             {
                 readers.Add(password, new Reader.Reader(all_shops[choise-1], name, csh));
                 Console.WriteLine("Please, input your data again");

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Bookstore.Register
 {
@@ -15,7 +13,7 @@ namespace Bookstore.Register
             Console.WriteLine("Please, write password:");
             string password = Console.ReadLine();
             var bookstore = all_shops.Values.Where(x => x.Name == name).FirstOrDefault();
-            if (bookstore == null && Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$") == true)
+            if (bookstore == null)
             {
                 all_shops.Add(password, new Shop.Shop(name));
                 Console.WriteLine($"The bookstore '{name}' has been added");

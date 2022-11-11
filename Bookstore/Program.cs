@@ -1,11 +1,5 @@
-﻿using Bookstore.Reader;
-using Bookstore.Register;
-using Bookstore.Shop;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-//
+﻿using System.Collections.Generic;
+
 namespace Bookstore
 {
     class Program

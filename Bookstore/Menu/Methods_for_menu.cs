@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
-using System.Drawing;
-using System.Text.RegularExpressions;
 // in a process
 
 
@@ -67,6 +64,10 @@ namespace Bookstore
                         var book = shop.GetBooks[bk - 1];
                         buy_book(book, rdr);
                     }
+                    else
+                    {
+                        Console.WriteLine("There isn`t a book with this index(");
+                    }
 
                 }
                 else if (answ.ToLower() == "n" || answ.ToLower() == "no")
@@ -126,7 +127,7 @@ namespace Bookstore
                 string ath = Console.ReadLine();
                 Console.WriteLine("Price:");
                 string prc = Console.ReadLine();
-                if(double.TryParse(prc, out double price) && price>0 && Regex.IsMatch(ath, @"([A-Z][a-z]{1,}( )[A-Z][a-z]{1,})"))
+                if(double.TryParse(prc, out double price) && price>0)
                 {
                     shop.AddBook(new Book.Book(ttl, ath, price));
                 }

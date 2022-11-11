@@ -3,7 +3,6 @@ using Bookstore.Register;
 using Bookstore.Shop;
 using System;
 using System.Collections.Generic;
-using System.Text;
 // in a process
 
 namespace Bookstore
