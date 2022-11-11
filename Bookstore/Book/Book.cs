@@ -18,22 +18,5 @@ namespace Bookstore.Book
             this.Price = Price;
             DateOfCreation = DateTime.Now;
         }
-
-        public static bool operator ==(Book b1, Book b2)
-        {
-            if(b1.Title == b2.Title && b1.Author == b2.Author)
-            {
-                return true;
-            }
-            return false;
-        }
-        public static bool operator !=(Book b1, Book b2)
-        {
-            if (b1.Title != b2.Title || b1.Author != b2.Author)
-            {
-                return false;
-            }
-            return true;
-        }
     }
 }
